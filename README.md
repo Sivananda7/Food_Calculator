@@ -36,7 +36,7 @@ Our model undergoes rigorous training to become the Gordon Ramsay of food detect
 - 🏋️‍♂️ Training regimen: 50 epochs
 - 🍱 Batch size: 4 images at a time
 - 👁️ Image size: A crisp 640x640 resolution
-- 💪 Hardware: GPU-powered (device 0) for lightning-fast learning
+- 💪 Hardware: GPU-powered (RTX 3060 Laptop) for lightning-fast learning
 - 🛑 Early stopping: We know when the dish is perfectly cooked (patience of 5)
 
 ## 🚀 Let's Get Cooking!
