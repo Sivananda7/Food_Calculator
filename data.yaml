@@ -1,0 +1,13 @@
+train: C:/Users/kaavi/OneDrive/Desktop/food/train/images
+val: C:/Users/kaavi/OneDrive/Desktop/food/valid/images
+test: C:/Users/kaavi/OneDrive/Desktop/food/test/images
+
+nc: 3
+names: ['lasagna', 'pasta', 'pizza']
+
+roboflow:
+  workspace: kaavin-study-drive
+  project: food-k8grc
+  version: 1
+  license: MIT
+  url: https://universe.roboflow.com/kaavin-study-drive/food-k8grc/dataset/1
