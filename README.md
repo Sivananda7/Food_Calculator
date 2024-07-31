@@ -24,7 +24,7 @@ Our AI is trained on a smorgasbord of images, carefully curated and divided:
 - 🥘 Validation set: `.../valid/images`
 - 🍲 Test set: `.../test/images`
 
-On today's menu, we're serving three Italian classics:
+On today's menu, we're serving eleven Italian classics:
 1. 🥩 Carne
 2. 🐇 Coniglio
 3. 🫘 Fagioli
