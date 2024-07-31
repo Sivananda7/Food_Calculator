@@ -2,12 +2,12 @@ train: C:/Users/kaavi/OneDrive/Desktop/food/train/images
 val: C:/Users/kaavi/OneDrive/Desktop/food/valid/images
 test: C:/Users/kaavi/OneDrive/Desktop/food/test/images
 
-nc: 3
-names: ['lasagna', 'pasta', 'pizza']
+nc: 11
+names: ['carne', 'coniglio', 'fagioli', 'insalata', 'insalata pesce', 'pane', 'pasta', 'pasta pesto', 'patate', 'pesce', 'riso']
 
 roboflow:
-  workspace: kaavin-study-drive
-  project: food-k8grc
-  version: 1
-  license: MIT
-  url: https://universe.roboflow.com/kaavin-study-drive/food-k8grc/dataset/1
+  workspace: cv-eu0de
+  project: food-detection-erjhm
+  version: 3
+  license: Public Domain
+  url: https://universe.roboflow.com/cv-eu0de/food-detection-erjhm/dataset/3

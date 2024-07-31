@@ -1,6 +1,6 @@
-# Food > 2024-07-28 1:36pm
-https://universe.roboflow.com/kaavin-study-drive/food-k8grc
+# food detection > 2023-07-06 11:27pm
+https://universe.roboflow.com/cv-eu0de/food-detection-erjhm
 
 Provided by a Roboflow user
-License: MIT
+License: Public Domain
 
