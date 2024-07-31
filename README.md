@@ -25,9 +25,17 @@ Our AI is trained on a smorgasbord of images, carefully curated and divided:
 - 🍲 Test set: `.../test/images`
 
 On today's menu, we're serving three Italian classics:
-1. 🥘 Lasagna
-2. 🍝 Pasta
-3. 🍕 Pizza
+1. 🥩 Carne
+2. 🐇 Coniglio
+3. 🫘 Fagioli
+4. 🥗 Insalata
+5. 🥗🐟 Insalata pesce
+6. 🍞 Pane
+7. 🍝 Pasta
+8. 🍝🌿 Pasta pesto
+9. 🥔 Patate
+10. 🐟 Pesce
+11. 🍚 Riso
 
 ## 👨‍🍳 Training the AI Chef
 
