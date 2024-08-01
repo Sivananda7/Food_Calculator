@@ -3,7 +3,7 @@ val: C:/Users/kaavi/OneDrive/Desktop/food/valid/images
 test: C:/Users/kaavi/OneDrive/Desktop/food/test/images
 
 nc: 11
-names: ['carne', 'coniglio', 'fagioli', 'insalata', 'insalata pesce', 'pane', 'pasta', 'pasta pesto', 'patate', 'pesce', 'riso']
+names: ['meat', 'rabbit', 'beans', 'salad', 'fish salad', 'bread', 'pasta', 'pesto pasta', 'potatoes', 'fish', 'rice']
 
 roboflow:
   workspace: cv-eu0de

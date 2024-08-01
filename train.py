@@ -9,7 +9,7 @@ def main():
     project = "C:/Users/kaavi/OneDrive/Desktop/food"
     experiment = "food-model"
 
-    batch_size = 4
+    batch_size = 16
 
     results = model.train(data=data_yaml_file,
                           epochs = 50,

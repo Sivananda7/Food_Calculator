@@ -25,24 +25,24 @@ Our AI is trained on a smorgasbord of images, carefully curated and divided:
 - 🍲 Test set: `.../test/images`
 
 On today's menu, we're serving eleven Italian classics:
-1. 🥩 Carne
-2. 🐇 Coniglio
-3. 🫘 Fagioli
-4. 🥗 Insalata
-5. 🥗🐟 Insalata pesce
-6. 🍞 Pane
+1. 🥩 Meat
+2. 🐇 Rabbit
+3. 🫘 Beans
+4. 🥗 Salad
+5. 🥗🐟 Fish salad
+6. 🍞 Bread
 7. 🍝 Pasta
-8. 🍝🌿 Pasta pesto
-9. 🥔 Patate
-10. 🐟 Pesce
-11. 🍚 Riso
+8. 🍝🌿 Pesto pasta
+9. 🥔 Potatoes
+10. 🐟 Fish
+11. 🍚 Rice
 
 ## 👨‍🍳 Training the AI Chef
 
 Our model undergoes rigorous training to become the Gordon Ramsay of food detection:
 
 - 🏋️‍♂️ Training regimen: 50 epochs
-- 🍱 Batch size: 4 images at a time
+- 🍱 Batch size: 16 images at a time
 - 👁️ Image size: A crisp 640x640 resolution
 - 💪 Hardware: GPU-powered (RTX 3060 Laptop) for lightning-fast learning
 - 🛑 Early stopping: We know when the dish is perfectly cooked (patience of 5)
