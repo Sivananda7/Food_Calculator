@@ -4,9 +4,9 @@ def main():
 
     model = YOLO("yolov8n.yaml")
 
-    data_yaml_file = "C:/Users/kaavi/OneDrive/Desktop/food/data.yaml"
+    data_yaml_file = "../food/data.yaml"
 
-    project = "C:/Users/kaavi/OneDrive/Desktop/food"
+    project = "../food"
     experiment = "food-model"
 
     batch_size = 16

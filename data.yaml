@@ -1,6 +1,6 @@
-train: C:/Users/kaavi/OneDrive/Desktop/food/train/images
-val: C:/Users/kaavi/OneDrive/Desktop/food/valid/images
-test: C:/Users/kaavi/OneDrive/Desktop/food/test/images
+train: ../food/train/images
+val: ../food/valid/images
+test: ../food/test/images
 
 nc: 11
 names: ['meat', 'rabbit', 'beans', 'salad', 'fish salad', 'bread', 'pasta', 'pesto pasta', 'potatoes', 'fish', 'rice']
