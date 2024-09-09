@@ -1,13 +1,13 @@
-train: ../food/train/images
-val: ../food/valid/images
-test: ../food/test/images
+train: ../train/images
+val: ../valid/images
+test: ../test/images
 
-nc: 11
-names: ['meat', 'rabbit', 'beans', 'salad', 'fish salad', 'bread', 'pasta', 'pesto pasta', 'potatoes', 'fish', 'rice']
+nc: 36
+names: ['AW cola', 'Beijing Beef', 'Chow Mein', 'Fried Rice', 'Hashbrown', 'Honey Walnut Shrimp', 'Kung Pao Chicken', 'String Bean Chicken Breast', 'Super Greens', 'The Original Orange Chicken', 'White Steamed Rice', 'black pepper rice bowl', 'burger', 'carrot_eggs', 'cheese burger', 'chicken waffle', 'chicken_nuggets', 'chinese_cabbage', 'chinese_sausage', 'crispy corn', 'curry', 'french fries', 'fried chicken', 'fried_chicken', 'fried_dumplings', 'fried_eggs', 'mango chicken pocket', 'mozza burger', 'mung_bean_sprouts', 'nugget', 'perkedel', 'rice', 'sprite', 'tostitos cheese dip sauce', 'triangle_hash_brown', 'water_spinach']
 
 roboflow:
-  workspace: cv-eu0de
-  project: food-detection-erjhm
-  version: 3
-  license: Public Domain
-  url: https://universe.roboflow.com/cv-eu0de/food-detection-erjhm/dataset/3
+  workspace: college-gg4mu
+  project: image-segmentation-yolov5
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/college-gg4mu/image-segmentation-yolov5/dataset/1

@@ -1,45 +1,59 @@
-from ultralytics import YOLO
 import cv2
-import yaml
+from ultralytics import YOLO
+import os
 
-img = "C:/Users/kaavi/OneDrive/Desktop/food/train/images/8_jpg.rf.4ef02d51c89b2c273fedec34286c58d6.jpg"
-imgAnot = "C:/Users/kaavi/OneDrive/Desktop/food/train/labels/8_jpg.rf.4ef02d51c89b2c273fedec34286c58d6.txt"
+# Load the model
+model = YOLO('best.pt')
 
-data_yaml_file = "C:/Users/kaavi/OneDrive/Desktop/food/data.yaml"
+# Function to process an image
+def process_image(image_path):
+    # Read the image
+    img = cv2.imread(image_path)
+    
+    # Run YOLOv8 inference on the image
+    results = model(img)
 
-with open(data_yaml_file, 'r') as file:
-    data = yaml.safe_load(file)
+    # Create a copy of the original image for annotation
+    annotated_img = img.copy()
 
-label_names = data['names']
-print(label_names)
+    # Iterate through the detections and draw them on the image
+    for r in results:
+        boxes = r.boxes
+        for box in boxes:
+            # Get box coordinates
+            x1, y1, x2, y2 = box.xyxy[0]
+            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+            
+            # Get class and confidence
+            cls = int(box.cls[0])
+            conf = float(box.conf[0])
+            
+            # Draw bounding box
+            cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            
+            # Add label
+            label = f'{model.names[cls]} {conf:.2f}'
+            cv2.putText(annotated_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-img = cv2.imread(img)
-H,W,_ = img.shape
+    # Save the annotated image
+    output_path = 'output_' + os.path.basename(image_path)
+    cv2.imwrite(output_path, annotated_img)
 
-with open(imgAnot,'r') as file:
-    lines = file.readlines()
+    # Generate text output
+    text_output = []
+    for r in results:
+        for box in r.boxes:
+            class_name = model.names[int(box.cls[0])]
+            confidence = float(box.conf[0])
+            text_output.append(f"{class_name}: {confidence:.2f}")
 
-annotations = []
-for line in lines:
-    values = line.split()
-    label = values[0]
+    return output_path, text_output
 
-    x,y,w,h = map(float, values[1:])
-    annotations.append((label,x,y,w,h))
-print(annotations)
+# Example usage
+input_image_path = 'C:/Users/kaavi/OneDrive/Desktop/food/hash.jpeg'
+output_image_path, predictions = process_image(input_image_path)
 
-for annotations in annotations:
-    label, x,y,w,h = annotations
-    label_name = label_names[int(label)]
-
-
-    x1 = int((x - w / 2 ) * W)
-    y1 = int((y - h / 2 ) * H)
-    x2 = int((x + w / 2 ) * W)
-    y2 = int((y + h / 2 ) * H)
-
-    cv2.rectangle(img, (x1,y1),(x2,y2),(200,200,0),1)
-
-    cv2.putText(img, label_name,(x1,y1-5), cv2.FONT_HERSHEY_SIMPLEX,0.5, (200,200,0),2)
-
-cv2.imwrite("img.jpg", img)
+print(f"Annotated image saved as: {output_image_path}")
+print("Predictions:")
+for pred in predictions:
+    print(pred)
