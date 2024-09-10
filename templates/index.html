@@ -12,7 +12,7 @@
             color: #333;
             margin: 0;
             padding: 0;
-            background-color: #d4ebf2; /* Light blue background */
+            background-color: #d4ebf2;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -45,14 +45,13 @@
             align-items: center;
             margin-bottom: 30px;
         }
-        .file-upload-container {
+        .upload-options {
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
+            gap: 20px;
+            margin-bottom: 20px;
         }
-        .file-upload {
-            display: inline-block;
+        .upload-option {
             padding: 12px 24px;
             background-color: #3498db;
             color: #fff;
@@ -60,14 +59,20 @@
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            border: none;
         }
-        .file-upload:hover {
+        .upload-option:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
+        .upload-option span {
+            margin-left: 8px;
+        }
         .file-name {
-            margin-left: 15px;
+            margin-top: 15px;
             font-size: 1em;
             color: #2c3e50;
         }
@@ -147,6 +152,17 @@
             font-size: 0.9em;
             color: #7f8c8d;
         }
+        #camera-view, #camera-canvas {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin-top: 20px;
+        }
+        #capture-photo {
+            display: none;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -154,11 +170,19 @@
         <h1>Foodie Vision 🍽️</h1>
         <p class="tagline">Uncover the delicious secrets in your photos with AI-powered food detection!</p>
         <div class="upload-container">
-            <div class="file-upload-container">
-                <label for="file-input" class="file-upload">Choose Your Foodie Pic 📸</label>
-                <span class="file-name" id="file-name">No file chosen</span>
+            <div class="upload-options">
+                <label for="file-input" class="upload-option">
+                    🖼️ <span>Upload a Photo</span>
+                </label>
+                <label id="camera-button" class="upload-option">
+                    📷 <span>Take a Photo</span>
+                </label>
             </div>
-            <input id="file-input" type="file" name="file" accept="image/*" required>
+            <input id="file-input" type="file" name="file" accept="image/*">
+            <video id="camera-view" autoplay playsinline></video>
+            <canvas id="camera-canvas"></canvas>
+            <button id="capture-photo">Capture Photo</button>
+            <span class="file-name" id="file-name">No file chosen</span>
             <button type="submit" id="detect-button">Detect Deliciousness</button>
         </div>
         <div id="loading">Analyzing your culinary masterpiece...</div>
@@ -192,23 +216,73 @@
     </div>
 
     <script>
-        function suggestImage(food) {
-            alert(`Great choice! Upload an image of ${food} to see how our AI detects it.`);
+        const fileInput = document.getElementById('file-input');
+        const cameraButton = document.getElementById('camera-button');
+        const cameraView = document.getElementById('camera-view');
+        const cameraCanvas = document.getElementById('camera-canvas');
+        const captureButton = document.getElementById('capture-photo');
+        const fileName = document.getElementById('file-name');
+        const detectButton = document.getElementById('detect-button');
+        const loadingDiv = document.getElementById('loading');
+        const resultsDiv = document.getElementById('results');
+
+        let stream;
+        let capturedImage;
+
+        function handleFileSelect(e) {
+            fileName.textContent = e.target.files[0].name;
+            capturedImage = null;
         }
 
-        document.getElementById('file-input').addEventListener('change', function(e) {
-            var fileName = e.target.files[0].name;
-            document.getElementById('file-name').textContent = fileName; // Display the file name next to the button
+        fileInput.addEventListener('change', handleFileSelect);
+
+        cameraButton.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                cameraView.srcObject = stream;
+                cameraView.style.display = 'block';
+                captureButton.style.display = 'block';
+                fileName.textContent = 'Camera ready';
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                alert('Unable to access the camera. Please make sure you have given the necessary permissions and try again.');
+            }
         });
 
-        document.getElementById('detect-button').addEventListener('click', function(e) {
+        captureButton.addEventListener('click', () => {
+            cameraCanvas.width = cameraView.videoWidth;
+            cameraCanvas.height = cameraView.videoHeight;
+            cameraCanvas.getContext('2d').drawImage(cameraView, 0, 0);
+            capturedImage = cameraCanvas.toDataURL('image/jpeg');
+            fileName.textContent = 'Photo captured';
+            stream.getTracks().forEach(track => track.stop());
+            cameraView.style.display = 'none';
+            captureButton.style.display = 'none';
+        });
+
+        detectButton.addEventListener('click', function(e) {
             e.preventDefault();
-            var formData = new FormData();
-            var fileInput = document.getElementById('file-input');
-            formData.append('file', fileInput.files[0]);
-            var loadingDiv = document.getElementById('loading');
-            var resultsDiv = document.getElementById('results');
             
+            let formData = new FormData();
+            
+            if (capturedImage) {
+                // Convert base64 to blob
+                fetch(capturedImage)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        formData.append('file', blob, 'captured_image.jpg');
+                        uploadAndDetect(formData);
+                    });
+            } else if (fileInput.files[0]) {
+                formData.append('file', fileInput.files[0]);
+                uploadAndDetect(formData);
+            } else {
+                alert('Please select an image or take a photo first.');
+                return;
+            }
+        });
+
+        function uploadAndDetect(formData) {
             loadingDiv.style.display = 'block';
             resultsDiv.innerHTML = '';
 
@@ -234,7 +308,11 @@
                 loadingDiv.style.display = 'none';
                 resultsDiv.innerHTML = '<p>Oops! Something went wrong. Please try again.</p>';
             });
-        });
+        }
+
+        function suggestImage(food) {
+            alert(`Great choice! Upload an image of ${food} to see how our AI detects it.`);
+        }
     </script>
 </body>
 </html>
